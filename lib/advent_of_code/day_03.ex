@@ -1,7 +1,5 @@
 defmodule AdventOfCode.Day03 do
-  @priorities ((?a..?z |> Enum.to_list() |> Enum.with_index(1)) ++
-                 (?A..?Z |> Enum.to_list() |> Enum.with_index(27)))
-              |> Enum.into(%{})
+  @priorities (Enum.with_index(?a..?z, 1) ++ Enum.with_index(?A..?Z, 27)) |> Enum.into(%{})
 
   def part1(input) do
     input
@@ -25,10 +23,7 @@ defmodule AdventOfCode.Day03 do
   end
 
   def find_common_item(comps) do
-    comps
-    |> Enum.map(&MapSet.new/1)
-    |> Enum.reduce(fn comp, acc -> MapSet.intersection(comp, acc) end)
-    |> Enum.at(0)
+    comps |> Enum.map(&MapSet.new/1) |> Enum.reduce(&MapSet.intersection/2) |> Enum.at(0)
   end
 
   def split_rucksack(rucksack) do
